@@ -1,9 +1,10 @@
 import React from "react";
+import axios from "axios";
 import "./App.css";
 import Header from "./components/header";
 import Search from "./components/search";
 import Nasa from "./components/nasa";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const dummy = {
   copyright: "Daniel Stern",
@@ -18,12 +19,24 @@ const dummy = {
 };
 
 function App() {
-  const [data, setData] = useState(dummy);
+  const [data, setData] = useState("");
   const [tarih, setTarih] = useState("2023-02-02");
 
   const changeHandler = (e) => {
     setTarih(e);
   };
+
+  useEffect(() => {
+    axios
+      .get(
+        "https://api.nasa.gov/planetary/apod?api_key=wsPw7gjobpVjTLGhSbcTzKD2xHOwojUBLXcVaKxD&date=" +
+          tarih
+      )
+      .then((response) => setData(response.data))
+
+      .catch((error) => console.log(error));
+  }, [tarih]);
+
   return (
     <div className="App">
       <Header />
