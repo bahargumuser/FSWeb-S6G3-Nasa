@@ -1,4 +1,5 @@
 import React from "react";
+import Apod from "../APOD.js";
 
 const Text = (props) => {
   const { copyright, date, description } = props.data;
